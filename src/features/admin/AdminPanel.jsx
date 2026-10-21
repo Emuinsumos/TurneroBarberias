@@ -93,6 +93,7 @@ export default function AdminPanel() {
           <span className="muted small"> · {BUSINESS_ID}</span>
         </div>
         <div className="admin-actions">
+          <a className="btn ghost sm" href="/manual.pdf" target="_blank" rel="noreferrer">Manual</a>
           <Link className="btn ghost sm" to="/">Ver página</Link>
           <button className="btn ghost sm" onClick={() => signOut(auth)}>Salir</button>
         </div>

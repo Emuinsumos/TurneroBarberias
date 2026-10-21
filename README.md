@@ -48,3 +48,7 @@ Para que cada servicio lo haga cada profesional, editá el servicio y tildá qui
 
 ## Etapas
 1 ✅ base · 2 ✅ reglas · 3 ✅ página pública · 4 ✅ reservas · 5 ✅ WhatsApp automático (ver `docs/WHATSAPP.md`) · 6 ✅ admin · 7 ✅ (servicios, equipo, agenda, negocio, gestión de turnos) · 8 ✅ pruebas (`npm test`) y pulido · ver `docs/CHECKLIST.md` antes de producción
+
+## Manual de usuario
+
+Guía completa para el dueño del negocio: `docs/MANUAL.md` (versión para imprimir o enviar: `docs/MANUAL.pdf`).
