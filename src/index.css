@@ -318,3 +318,4 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .hero-social { display: flex; gap: 14px; justify-content: center; margin-top: 28px; }
 .brand-ic { border: 1px solid rgba(255,255,255,.18); width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.35); transition: transform .15s ease; }
 .brand-ic:hover, .brand-ic:active { transform: translateY(-2px) scale(1.06); }
+.car-count { position: absolute; right: 12px; bottom: 10px; font-size: .75rem; background: rgba(0,0,0,.55); color: #fff; padding: 3px 10px; border-radius: 999px; }

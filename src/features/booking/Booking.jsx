@@ -291,7 +291,7 @@ export default function Booking() {
               </button>
             ))}
           </div>
-          {selectedPro && <Carousel images={galleryOf(selectedPro)} title={`Trabajos de ${selectedPro.name}`} />}
+          {selectedPro && <Carousel key={selectedPro.id} images={galleryOf(selectedPro)} title={`Trabajos de ${selectedPro.name}`} />}
           <div className="sticky-cta">
             <button className="btn lg" type="button" disabled={!profChoice} onClick={() => go(1)}>
               {profChoice ? "Continuar" : "Elegí un profesional"}
@@ -309,7 +309,7 @@ export default function Booking() {
               {selectedPro.name}
             </p>
           )}
-          {selectedPro && <Carousel images={galleryOf(selectedPro)} />}
+          {selectedPro && <Carousel key={selectedPro.id} images={galleryOf(selectedPro)} />}
           <Calendar
             today={today}
             maxDate={maxDate}
