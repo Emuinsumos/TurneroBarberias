@@ -313,3 +313,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--a
 .crop-tools, .crop-actions, .crop-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .crop-chips button { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: #fff; font: inherit; cursor: pointer; }
 .crop-chips button.on { background: var(--accent); border-color: var(--accent); color: #111; font-weight: 600; }
+
+/* Redes sociales (logos oficiales) */
+.hero-social { display: flex; gap: 14px; justify-content: center; margin-top: 28px; }
+.brand-ic { border: 1px solid rgba(255,255,255,.18); width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; color: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.35); transition: transform .15s ease; }
+.brand-ic:hover, .brand-ic:active { transform: translateY(-2px) scale(1.06); }
