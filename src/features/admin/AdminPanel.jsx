@@ -13,10 +13,12 @@ import { todayAR } from "../../lib/db";
 import { dateLabel, blocksFor, capacityMinutes } from "../../lib/availability";
 import { isActive } from "../../lib/appointmentPlan";
 import AppointmentsAdmin from "./AppointmentsAdmin";
+import TomorrowAdmin from "./TomorrowAdmin";
 
 const TABS = [
   { id: "resumen", label: "Resumen" },
   { id: "turnos", label: "Turnos" },
+  { id: "manana", label: "Mañana" },
   { id: "servicios", label: "Servicios" },
   { id: "equipo", label: "Profesionales" },
   { id: "agenda", label: "Agenda" },
@@ -115,6 +117,7 @@ export default function AdminPanel() {
         {tab === "negocio" && <BusinessAdmin />}
         {tab === "acceso" && <AccountAdmin />}
         {tab === "turnos" && <AppointmentsAdmin />}
+        {tab === "manana" && <TomorrowAdmin />}
       </main>
     </div>
   );
