@@ -4,6 +4,7 @@ import { dbUpdate, dbSet, newKey } from "../../lib/db";
 import { defaultWeekly } from "../../lib/schedule";
 import { P } from "../../config/paths";
 import { Field, Check, Status, useSave, optional, linesToList } from "./ui";
+import { clientWaNumber } from "../../lib/whatsapp";
 import { ImageInput, ImageListInput } from "./ImageInput";
 
 export default function ProfessionalsAdmin() {
@@ -17,11 +18,11 @@ export default function ProfessionalsAdmin() {
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const add = () =>
-    setForm({ id: null, name: "", description: "", photo: "", gallery: [], order: String(list.length + 1), active: true });
+    setForm({ id: null, name: "", description: "", whatsapp: "", photo: "", gallery: [], order: String(list.length + 1), active: true });
 
   const edit = (p) =>
     setForm({
-      id: p.id, name: p.name || "", description: p.description || "", photo: p.photo || "",
+      id: p.id, name: p.name || "", description: p.description || "", whatsapp: p.whatsapp || "", photo: p.photo || "",
       gallery: Array.isArray(p.gallery) ? p.gallery : Object.values(p.gallery || {}),
       order: String(p.order ?? 1), active: p.active !== false,
     });
@@ -31,12 +32,15 @@ export default function ProfessionalsAdmin() {
     const ok = await run(async () => {
       const name = form.name.trim();
       if (name.length < 2) throw new Error("Poné un nombre");
+      const wa = clientWaNumber(form.whatsapp);
+      if (form.whatsapp.trim() && (wa.length < 10 || wa.length > 15)) throw new Error("El WhatsApp del profesional no es válido. Ejemplo: 5491122334455");
       const isNew = !form.id;
       const id = form.id || newKey(P.professionals);
       const gallery = form.gallery.filter(Boolean);
       await dbUpdate(`${P.professionals}/${id}`, {
         name,
         description: optional(form.description),
+        whatsapp: wa || null,
         photo: optional(form.photo),
         gallery: gallery.length ? gallery : null,
         order: Number(form.order) || 0,
@@ -60,6 +64,9 @@ export default function ProfessionalsAdmin() {
         <h3>{form.id ? "Editar profesional" : "Nuevo profesional"}</h3>
         <Field label="Nombre"><input value={form.name} onChange={(e) => set("name", e.target.value)} required /></Field>
         <Field label="Descripción / especialidad"><input value={form.description} onChange={(e) => set("description", e.target.value)} /></Field>
+        <Field label="WhatsApp del profesional (opcional)" hint="Si lo cargás, los clientes que lo elijan le escriben a este número. Si lo dejás vacío, usan el del negocio. Ejemplo: 5491122334455">
+          <input value={form.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} inputMode="tel" placeholder="5491122334455" />
+        </Field>
         <ImageInput label="Foto de perfil" value={form.photo} onChange={(v) => set("photo", v)} maxSide={480} maxBytes={50000} round aspect={1} hint="Acomodala para que la cara quede centrada." />
         <ImageListInput label="Galería de trabajos" values={form.gallery} onChange={(v) => set("gallery", v)} aspect={4 / 3} hint="Elegí varias fotos: las acomodás de a una y quedan en formato 4:3." />
         <Field label="Orden"><input type="number" inputMode="numeric" value={form.order} onChange={(e) => set("order", e.target.value)} /></Field>
@@ -86,6 +93,7 @@ export default function ProfessionalsAdmin() {
           <div>
             <b>{p.name}</b> {p.active === false && <span className="tag">inactivo</span>}
             {p.description && <p className="muted small">{p.description}</p>}
+            <p className="muted small">{p.whatsapp ? `WhatsApp propio: ${p.whatsapp}` : "WhatsApp: el del negocio"}</p>
           </div>
           <div className="btn-row">
             <button className="btn ghost sm" onClick={() => edit(p)}>Editar</button>

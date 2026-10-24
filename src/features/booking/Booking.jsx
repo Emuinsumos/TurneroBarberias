@@ -206,9 +206,9 @@ export default function Booking() {
   // ---- pantalla de éxito ----
   if (done) {
     const link = waLink(
-      c.whatsapp,
+      slotPro?.whatsapp || c.whatsapp, // el del profesional elegido; si no tiene, el del negocio
       bookingMessage({
-        businessName: c.name, name: client.name.trim(), service: serviceNames,
+        businessName: slotPro?.whatsapp ? slotPro.name : c.name, name: client.name.trim(), service: serviceNames,
         pro: slotPro?.name, dateText: dateLabel(date), time: slot.time, price, code: done.code,
       })
     );
