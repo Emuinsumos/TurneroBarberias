@@ -8,6 +8,7 @@ import ProfessionalsAdmin from "./ProfessionalsAdmin";
 import AgendaAdmin from "./AgendaAdmin";
 import BusinessAdmin from "./BusinessAdmin";
 import AccountAdmin from "./AccountAdmin";
+import ShopAdmin from "./ShopAdmin";
 import { useAppointments, useProfessionals, useAvailability, useBlocked, toList } from "../../lib/data";
 import { todayAR } from "../../lib/db";
 import { dateLabel, blocksFor, capacityMinutes } from "../../lib/availability";
@@ -22,6 +23,7 @@ const TABS = [
   { id: "servicios", label: "Servicios" },
   { id: "equipo", label: "Profesionales" },
   { id: "agenda", label: "Agenda" },
+  { id: "shop", label: "Shop" },
   { id: "negocio", label: "Negocio" },
   { id: "acceso", label: "Acceso" },
 ];
@@ -114,6 +116,7 @@ export default function AdminPanel() {
         {tab === "servicios" && <ServicesAdmin />}
         {tab === "equipo" && <ProfessionalsAdmin />}
         {tab === "agenda" && <AgendaAdmin />}
+        {tab === "shop" && <ShopAdmin />}
         {tab === "negocio" && <BusinessAdmin />}
         {tab === "acceso" && <AccountAdmin />}
         {tab === "turnos" && <AppointmentsAdmin />}

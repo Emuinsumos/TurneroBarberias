@@ -3,9 +3,13 @@ import Img from "../../components/Img";
 import { CropQueue } from "./ImageCropper";
 import { dbSet, newKey } from "../../lib/db";
 import { P } from "../../config/paths";
+import { uploadImage } from "../../lib/media";
 
-// Guarda una foto ya recortada y comprimida (data URL) → "m:ID"
+// Guarda una foto ya recortada y comprimida (data URL).
+// Va a Firebase Storage y devuelve su URL; si Storage no responde, usa el método anterior ("m:ID").
 async function saveDataUrl(dataUrl) {
+  const url = await uploadImage(dataUrl);
+  if (url) return url;
   const id = newKey(P.media);
   await dbSet(`${P.media}/${id}`, dataUrl);
   return `m:${id}`;

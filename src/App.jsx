@@ -6,6 +6,7 @@ import ErrorBoundary from "./ErrorBoundary";
 
 // El panel de admin se carga aparte: los clientes no descargan ese código.
 const AdminRoute = lazy(() => import("./features/admin/AdminRoute"));
+const Shop = lazy(() => import("./features/shop/Shop"));
 
 function NotFound() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/reservar" element={<Booking />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/admin" element={<AdminRoute />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
