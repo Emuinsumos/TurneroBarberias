@@ -60,3 +60,15 @@ assert.ok(!orderMessage({ name: "Ana", items, total: 0, code: "X" }).includes("T
 assert.ok(clientOrderMessage({ code: "K7M2QX", customerName: "Ana Gómez", status: "entregada" }).includes("Ana"));
 assert.ok(clientOrderMessage({ code: "K7M2QX", customerName: "Ana", status: "cancelada" }).includes("cancelado"));
 console.log("OK shop");
+
+// migración de fotos (temporal): encuentra referencias "m:ID" en cualquier lugar del nodo
+import { findPhotoRefs } from "../src/lib/mediaRefs.js";
+const id1 = "-OabcdefghijklmnOPQR", id2 = "-OzzzzzzzzzzzzzzzZZZ";
+const refs = findPhotoRefs(
+  { logo: `m:${id1}`, gallery: [`m:${id2}`, "https://x/y.webp", `m:${id1}`], name: "m: hola", nested: { a: { photo: `m:${id2}` } } },
+  "base/config"
+);
+assert.deepEqual(refs.map((r) => r.path).sort(), ["base/config/gallery/0", "base/config/gallery/2", "base/config/logo", "base/config/nested/a/photo"]);
+assert.equal(findPhotoRefs(null, "x").length, 0);
+assert.equal(findPhotoRefs("https://x", "x").length, 0);
+console.log("OK mediaRefs");

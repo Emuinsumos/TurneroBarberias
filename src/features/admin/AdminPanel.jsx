@@ -9,6 +9,7 @@ import AgendaAdmin from "./AgendaAdmin";
 import BusinessAdmin from "./BusinessAdmin";
 import AccountAdmin from "./AccountAdmin";
 import ShopAdmin from "./ShopAdmin";
+import MigrateMedia from "./MigrateMedia"; // TEMPORAL
 import { useAppointments, useProfessionals, useAvailability, useBlocked, toList } from "../../lib/data";
 import { todayAR } from "../../lib/db";
 import { dateLabel, blocksFor, capacityMinutes } from "../../lib/availability";
@@ -117,7 +118,7 @@ export default function AdminPanel() {
         {tab === "equipo" && <ProfessionalsAdmin />}
         {tab === "agenda" && <AgendaAdmin />}
         {tab === "shop" && <ShopAdmin />}
-        {tab === "negocio" && <BusinessAdmin />}
+        {tab === "negocio" && <><BusinessAdmin /><MigrateMedia /></>}
         {tab === "acceso" && <AccountAdmin />}
         {tab === "turnos" && <AppointmentsAdmin />}
         {tab === "manana" && <TomorrowAdmin />}
