@@ -20,7 +20,6 @@ export const useServices = () => useNode(P.services);
 export const useProfessionals = () => useNode(P.professionals);
 export const useAvailability = () => useNode(P.availabilityAll);
 export const useBlocked = () => useNode(P.blockedSlots);
-export const usePlan = () => useNode(P.plan);
 export const useShopProducts = () => useNode(P.shopProducts);
 export const useShopOrders = () => useNode(P.shopOrders);
 

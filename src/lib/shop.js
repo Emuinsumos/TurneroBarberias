@@ -4,8 +4,8 @@ import { money } from "./hours.js";
 export const ORDER_STATUS = { pendiente: "Nueva", recibida: "Recibida", entregada: "Entregada", cancelada: "Cancelada" };
 export const ORDER_STATUS_LIST = ["pendiente", "recibida", "entregada", "cancelada"];
 
-// El Shop aparece solo si el plan lo permite (lo activa el dueño) Y el local lo prendió.
-export const isShopOn = (plan, cfg) => plan?.shop === true && cfg?.shopEnabled === true;
+// El Shop aparece solo si el local lo prendió desde su panel (config/shopEnabled).
+export const isShopOn = (cfg) => cfg?.shopEnabled === true;
 
 // Código de retiro: 6 caracteres sin letras/números que se confunden (0/O, 1/I).
 const ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

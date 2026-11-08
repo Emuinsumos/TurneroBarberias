@@ -60,14 +60,10 @@
       ".read": "auth.token.role === 'admin' && auth.token.businessId === $b",
       ".write": "auth.token.role === 'admin' && auth.token.businessId === $b"
      },
-     "plan": {
-      ".read": true,
-      ".write": false
-     },
      "shop": {
       "products": {
        ".read": true,
-       ".write": "auth.token.role === 'admin' && auth.token.businessId === $b && root.child('turneroProfesionales').child('businesses').child($b).child('plan').child('shop').val() === true",
+       ".write": "auth.token.role === 'admin' && auth.token.businessId === $b",
        "$id": {
         ".validate": "newData.hasChildren(['name','variants']) && newData.child('name').isString() && newData.child('name').val().length >= 1 && newData.child('name').val().length <= 120 && (!newData.child('description').exists() || (newData.child('description').isString() && newData.child('description').val().length <= 600)) && (!newData.child('image').exists() || (newData.child('image').isString() && newData.child('image').val().length <= 1000))",
         "variants": {
@@ -84,7 +80,7 @@
         "createdAt"
        ],
        "$code": {
-        ".write": "(auth.token.role === 'admin' && auth.token.businessId === $b) || (root.child('turneroProfesionales').child('businesses').child($b).child('plan').child('shop').val() === true && root.child('turneroProfesionales').child('businesses').child($b).child('config').child('shopEnabled').val() === true && !data.exists() && newData.exists())",
+        ".write": "(auth.token.role === 'admin' && auth.token.businessId === $b) || (root.child('turneroProfesionales').child('businesses').child($b).child('config').child('shopEnabled').val() === true && !data.exists() && newData.exists())",
         ".validate": "$code.matches(/^[A-Z0-9]{6}$/) && newData.hasChildren(['code','customerName','customerPhone','items','total','status','createdAt']) && newData.child('code').val() === $code && newData.child('customerName').isString() && newData.child('customerName').val().length >= 2 && newData.child('customerName').val().length <= 80 && newData.child('customerPhone').isString() && newData.child('customerPhone').val().matches(/^[0-9+ ()-]{6,20}$/) && newData.child('total').isNumber() && newData.child('total').val() >= 0 && newData.child('createdAt').isNumber() && (newData.child('status').val() === 'pendiente' || (auth.token.role === 'admin' && auth.token.businessId === $b))",
         "$field": {
          ".validate": "$field.matches(/^(code|customerName|customerPhone|items|total|status|createdAt|updatedAt)$/) && ($field !== 'status' || (newData.isString() && newData.val().matches(/^(pendiente|recibida|entregada|cancelada)$/)))",

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { serverTimestamp } from "firebase/database";
-import { useConfig, usePlan, useShopProducts, toList } from "../../lib/data";
+import { useConfig, useShopProducts, toList } from "../../lib/data";
 import { dbSet } from "../../lib/db";
 import { P, BUSINESS_ID } from "../../config/paths";
 import Img from "../../components/Img";
@@ -61,7 +61,6 @@ function ProductCard({ p, onAdd }) {
 
 export default function Shop() {
   const cfg = useConfig();
-  const plan = usePlan();
   const prods = useShopProducts();
   const [cart, setCart] = useState(loadCart);
   const [open, setOpen] = useState(false);
@@ -81,11 +80,11 @@ export default function Shop() {
   useEffect(() => { saveCart(cart); }, [cart]);
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  if (cfg.loading || plan.loading || prods.loading)
+  if (cfg.loading || prods.loading)
     return <div className="splash"><div className="spinner" /></div>;
   if (cfg.error || prods.error)
     return <div className="wrap" style={{ paddingTop: 80 }}><p>No se pudo cargar: {cfg.error || prods.error}</p></div>;
-  if (!isShopOn(plan.data, c))
+  if (!isShopOn(c))
     return (
       <div className="wrap" style={{ padding: "80px 16px", textAlign: "center" }}>
         <h2>Shop no disponible</h2>

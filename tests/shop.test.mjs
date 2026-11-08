@@ -4,11 +4,11 @@ import {
   orderItems, itemsOf, matchOrder, orderMessage, clientOrderMessage,
 } from "../src/lib/shop.js";
 
-// El Shop solo se ve con plan habilitado Y prendido por el local
-assert.equal(isShopOn({ shop: true }, { shopEnabled: true }), true);
-assert.equal(isShopOn({ shop: true }, { shopEnabled: false }), false);
-assert.equal(isShopOn({}, { shopEnabled: true }), false);
-assert.equal(isShopOn(null, null), false);
+// El Shop solo se ve si el local lo prendió
+assert.equal(isShopOn({ shopEnabled: true }), true);
+assert.equal(isShopOn({ shopEnabled: false }), false);
+assert.equal(isShopOn({}), false);
+assert.equal(isShopOn(null), false);
 
 // códigos: 6 caracteres, sin 0/O/1/I, y matchean la regla de Firebase
 for (let i = 0; i < 200; i++) assert.match(makeOrderCode(), /^[A-HJ-NP-Z2-9]{6}$/);

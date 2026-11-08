@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useConfig, usePlan } from "../../lib/data";
+import { useConfig } from "../../lib/data";
 import { dbUpdate } from "../../lib/db";
 import { P } from "../../config/paths";
 import { Check, Status, useSave } from "./ui";
@@ -7,24 +7,11 @@ import ShopProductsAdmin from "./ShopProductsAdmin";
 import ShopOrdersAdmin from "./ShopOrdersAdmin";
 
 export default function ShopAdmin() {
-  const plan = usePlan();
   const cfg = useConfig();
   const [tab, setTab] = useState("pedidos");
   const [st, run] = useSave();
 
-  if (plan.loading || cfg.loading) return <p className="muted">Cargando…</p>;
-
-  // Sin plan habilitado el Shop queda bloqueado (también lo bloquean las reglas de Firebase).
-  if (plan.data?.shop !== true)
-    return (
-      <div className="admin-card">
-        <h3>🔒 Shop</h3>
-        <p className="muted">
-          Vendé tus productos con catálogo digital, carrito y pedidos para retirar en el local.
-          Esta función está disponible en un plan superior. Consultá para activarla.
-        </p>
-      </div>
-    );
+  if (cfg.loading) return <p className="muted">Cargando…</p>;
 
   const on = cfg.data?.shopEnabled === true;
   return (

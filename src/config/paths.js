@@ -16,8 +16,7 @@ export const P = {
   slotLocks: (profId, date) => `${base}/slotLocks/${profId}/${date}`,
   media: `${base}/media`,
   auditLog: `${base}/auditLog`,
-  // Shop. "plan/shop" lo activa el dueño del sistema (consola); "config/shopEnabled" lo prende el local.
-  plan: `${base}/plan`,
+  // Shop (se prende desde el admin con config/shopEnabled)
   shopProducts: `${base}/shop/products`,
   shopOrders: `${base}/shop/orders`,
   shopOrder: (code) => `${base}/shop/orders/${code}`,

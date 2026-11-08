@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
-  useConfig, useServices, useProfessionals, useAvailability, usePlan, toList,
+  useConfig, useServices, useProfessionals, useAvailability, toList,
 } from "../../lib/data";
 import { isShopOn } from "../../lib/shop";
 import Img from "../../components/Img";
@@ -33,9 +33,8 @@ export default function Home() {
   const sv = useServices();
   const pr = useProfessionals();
   const av = useAvailability();
-  const plan = usePlan();
   const c = cfg.data || {};
-  const shopOn = isShopOn(plan.data, c);
+  const shopOn = isShopOn(c);
   const heroUrl = useImgUrl(c.heroImage);
 
   useEffect(() => {
