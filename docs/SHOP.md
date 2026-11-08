@@ -9,13 +9,13 @@
 - El local ve los pedidos en **Admin → Shop → Pedidos**: buscador por código o nombre, y estados *Nueva → Recibida / Entregada / Cancelada*.
 - Mientras el interruptor esté apagado, el botón no aparece y las reglas rechazan pedidos nuevos.
 
-## Fotos en Firebase Storage
-- Las fotos nuevas (de todo el sistema, no solo del Shop) se suben a Storage y se guarda solo la URL.
+## Fotos en Cloudinary (plan gratis, sin tarjeta)
+- Las fotos nuevas (de todo el sistema, no solo del Shop) se suben a Cloudinary y se guarda solo la URL.
 - Las fotos viejas (`m:ID`, guardadas en la base) se siguen viendo igual: no hace falta migrar nada.
-- Si Storage no responde, la app guarda la foto como antes, así que nunca deja de funcionar.
-- Bucket: por defecto `<projectId>.firebasestorage.app`. Si es otro, definí `VITE_FIREBASE_STORAGE_BUCKET`.
+- Si Cloudinary no está configurado o falla, la app guarda la foto como antes: nunca deja de funcionar.
+- Configuración: `src/config/cloudinary.js` (variables `VITE_CLOUDINARY_CLOUD_NAME` y `VITE_CLOUDINARY_UPLOAD_PRESET`).
 
-## Puesta en marcha (una sola vez por proyecto de Firebase)
-1. Consola de Firebase → **Storage** → "Comenzar" (puede pedir el plan Blaze).
-2. Storage → **Reglas** → pegar el contenido de `storage.rules` → Publicar.
+## Puesta en marcha
+1. Cloudinary → Settings → Upload → Upload presets → crear uno con *Signing mode: Unsigned* y formatos solo de imagen.
+2. Cargar el cloud name y el nombre del preset en `src/config/cloudinary.js`.
 3. Realtime Database → **Reglas** → pegar `database.rules.json` → Publicar.

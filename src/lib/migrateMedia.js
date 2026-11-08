@@ -1,4 +1,4 @@
-// TEMPORAL: pasa las fotos viejas (guardadas en la base como "m:ID") a Firebase Storage.
+// TEMPORAL: pasa las fotos viejas (guardadas en la base como "m:ID") a Cloudinary.
 // Se usa una vez por barbería desde Admin → Negocio y después se elimina este archivo.
 import { ref, get } from "firebase/database";
 import { db } from "../config/firebase";
@@ -38,7 +38,7 @@ export async function migratePhotos(onProgress) {
     const data = await loadMedia(ids[i]);
     if (!data) { missing++; continue; }
     const url = await uploadImage(data);
-    if (!url) throw new Error("Storage todavía no está listo. Revisá que lo activaste y publicaste las reglas de Storage.");
+    if (!url) throw new Error("Cloudinary todavía no está listo. Revisá el cloud name y el upload preset.");
     for (const r of refs.filter((x) => x.id === ids[i])) await dbSet(r.path, url);
     migrated.push(ids[i]);
     writeMigrated([...new Set([...readMigrated(), ids[i]])]);

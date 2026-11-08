@@ -1,4 +1,4 @@
-// TEMPORAL: botón para pasar las fotos viejas a Storage. Borrar este archivo y su uso en AdminPanel al terminar.
+// TEMPORAL: botón para pasar las fotos viejas a Cloudinary. Borrar este archivo y su uso en AdminPanel al terminar.
 import { useEffect, useState } from "react";
 import { Status } from "./ui";
 import { findOldPhotos, migratePhotos, cleanOldPhotos } from "../../lib/migrateMedia";
@@ -29,22 +29,22 @@ export default function MigrateMedia() {
   }
 
   const migrate = () => {
-    if (!window.confirm("¿Pasar todas las fotos de esta barbería a Storage? Todavía no se borra nada.")) return;
+    if (!window.confirm("¿Pasar todas las fotos de esta barbería a Cloudinary? Todavía no se borra nada.")) return;
     return run(async () => {
       const r = await migratePhotos((p) => setProg(`Pasando foto ${p.i} de ${p.total}…`));
       if (r.total === 0) return "No hay fotos viejas para pasar ✓";
-      return `Listo: ${r.migrated.length} fotos pasadas a Storage ✓${r.missing ? ` (${r.missing} sin archivo, se omitieron)` : ""}. Revisá que la página se vea bien y después tocá "Limpiar fotos viejas".`;
+      return `Listo: ${r.migrated.length} fotos pasadas a Cloudinary ✓${r.missing ? ` (${r.missing} sin archivo, se omitieron)` : ""}. Revisá que la página se vea bien y después tocá "Limpiar fotos viejas".`;
     });
   };
 
   const clean = () => {
-    if (!window.confirm("¿Borrar de la base las fotos que ya están en Storage? Hacelo después de revisar que todo se ve bien.")) return;
+    if (!window.confirm("¿Borrar de la base las fotos que ya están en Cloudinary? Hacelo después de revisar que todo se ve bien.")) return;
     return run(async () => `Listo: ${await cleanOldPhotos()} fotos viejas borradas de la base ✓`);
   };
 
   return (
     <div className="admin-card" style={{ marginTop: 14 }}>
-      <h3>Pasar fotos a Storage</h3>
+      <h3>Pasar fotos a Cloudinary</h3>
       <p className="muted small">
         Fotos viejas pendientes: <b>{pending ?? "…"}</b>. Esto es temporal: se usa una vez por barbería.
       </p>
@@ -52,7 +52,7 @@ export default function MigrateMedia() {
       <Status st={st} />
       <div className="btn-row" style={{ marginTop: 10 }}>
         <button type="button" className="btn" disabled={st.busy || pending === 0} onClick={migrate}>
-          {st.busy ? "Trabajando…" : "Pasar fotos a Storage"}
+          {st.busy ? "Trabajando…" : "Pasar fotos a Cloudinary"}
         </button>
         <button type="button" className="btn ghost" disabled={st.busy} onClick={clean}>Limpiar fotos viejas</button>
       </div>

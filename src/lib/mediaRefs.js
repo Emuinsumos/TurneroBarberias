@@ -1,4 +1,4 @@
-// TEMPORAL (migración de fotos a Storage): busca referencias a fotos viejas ("m:ID") dentro de un nodo.
+// TEMPORAL (migración de fotos a Cloudinary): busca referencias a fotos viejas ("m:ID") dentro de un nodo.
 export const OLD_PHOTO_RE = /^m:[\w-]{15,}$/;
 
 export function findPhotoRefs(value, path, out = []) {

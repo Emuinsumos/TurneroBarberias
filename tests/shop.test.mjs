@@ -72,3 +72,10 @@ assert.deepEqual(refs.map((r) => r.path).sort(), ["base/config/gallery/0", "base
 assert.equal(findPhotoRefs(null, "x").length, 0);
 assert.equal(findPhotoRefs("https://x", "x").length, 0);
 console.log("OK mediaRefs");
+
+import { optimizedUrl } from "../src/lib/cloudinaryUrl.js";
+assert.equal(
+  optimizedUrl("https://res.cloudinary.com/demo/image/upload/v1/businesses/x/a.jpg"),
+  "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/v1/businesses/x/a.jpg"
+);
+console.log("OK cloudinaryUrl");
