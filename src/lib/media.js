@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { ref, get } from "firebase/database";
-import { db } from "../config/firebase";
-import { P } from "../config/paths";
+import { db, getBucket } from "../config/firebase";
+import { P, BUSINESS_ID } from "../config/paths";
+import { newKey } from "./db";
 
 // Las fotos subidas se guardan aparte (media/{id}) y en los datos solo queda "m:{id}".
 // Así los datos de la página (servicios, equipo, config) siguen siendo livianos y cada
@@ -49,4 +50,26 @@ export function useImgUrl(value) {
     return () => { alive = false; };
   }, [id, value]);
   return url;
+}
+
+// ---- Subida de fotos nuevas a Firebase Storage ----
+// Devuelve la URL pública (https://...). Si Storage no está disponible devuelve null y el
+// llamador usa el método anterior (guardar en la base), así subir fotos nunca deja de andar.
+const EXT = { "image/webp": "webp", "image/jpeg": "jpg", "image/png": "png" };
+
+export async function uploadImage(dataUrl) {
+  try {
+    const blob = await (await fetch(dataUrl)).blob();
+    const type = EXT[blob.type] ? blob.type : "image/jpeg";
+    const [storage, { ref: sRef, uploadBytes, getDownloadURL }] = await Promise.all([
+      getBucket(),
+      import("firebase/storage"),
+    ]);
+    const fileRef = sRef(storage, `businesses/${BUSINESS_ID}/media/${newKey(P.media)}.${EXT[type]}`);
+    await uploadBytes(fileRef, blob, { contentType: type, cacheControl: "public,max-age=31536000,immutable" });
+    return await getDownloadURL(fileRef);
+  } catch (e) {
+    console.warn("Storage no disponible, la foto se guarda en la base:", e?.code || e);
+    return null;
+  }
 }

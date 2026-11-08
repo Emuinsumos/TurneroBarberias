@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import {
   useConfig, useServices, useProfessionals, useAvailability, toList,
 } from "../../lib/data";
+import { isShopOn } from "../../lib/shop";
 import Img from "../../components/Img";
 import BrandIcon, { BRAND_BG } from "../../components/BrandIcon";
 import { useImgUrl } from "../../lib/media";
@@ -33,6 +34,7 @@ export default function Home() {
   const pr = useProfessionals();
   const av = useAvailability();
   const c = cfg.data || {};
+  const shopOn = isShopOn(c);
   const heroUrl = useImgUrl(c.heroImage);
 
   useEffect(() => {
@@ -89,6 +91,7 @@ export default function Home() {
           <div className="hero-actions">
             <Link className="btn lg" to="/reservar">Reservar turno</Link>
             <a className="btn ghost lg" href="#servicios">Ver servicios</a>
+            {shopOn && <Link className="btn ghost lg" to="/shop">SHOP</Link>}
           </div>
           {socials.length > 0 && (
             <div className="hero-social">

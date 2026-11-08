@@ -16,4 +16,8 @@ export const P = {
   slotLocks: (profId, date) => `${base}/slotLocks/${profId}/${date}`,
   media: `${base}/media`,
   auditLog: `${base}/auditLog`,
+  // Shop (se prende desde el admin con config/shopEnabled)
+  shopProducts: `${base}/shop/products`,
+  shopOrders: `${base}/shop/orders`,
+  shopOrder: (code) => `${base}/shop/orders/${code}`,
 };
